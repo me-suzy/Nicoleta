@@ -1,0 +1,13 @@
+CREATE OR REPLACE TRIGGER trg_clienti_aur
+	AFTER UPDATE OF Codcl ON Clienti 
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE Contracte SET Codcl=:nou.Codcl
+		WHERE Codcl=:vechi.Codcl;
+	UPDATE Comenzi SET Codcl=:nou.Codcl
+		WHERE Codcl=:vechi.Codcl;
+	update Incasfact set Codcl=:nou.Codcl
+		WHERE Codcl=:vechi.Codcl;
+END;
+/

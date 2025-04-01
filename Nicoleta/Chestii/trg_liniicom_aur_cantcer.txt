@@ -1,0 +1,14 @@
+create or replace trigger trg_liniicom_aur_cantcer
+  after update of cantcer on liniicom
+referencing old as old new as new
+  for each row
+declare
+   old.cantcer liniicom.cantcer%type;
+begin
+   if :new.cantcer<>old.cantcer then
+    update comenzi set valcomcer=valcomcer - :old.cantcer * :new.PU + :old.cantcer * :new.PU
+         where idcom= :old.idcom;
+   end if;
+end;
+/
+ 

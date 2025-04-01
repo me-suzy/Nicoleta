@@ -1,0 +1,108 @@
+delete from liniicontr;
+delete from contracte;
+delete from incasfact;
+delete from docincasari;
+delete from facturi;
+delete from liniicom;
+delete from comenzi;
+delete from clienti;
+delete from localitati;
+delete from judet;
+delete from produse;
+
+
+
+
+insert into Judet values('IS','Moldova','Iasi ');
+insert into Localitati values('6600','Iasi','IS');
+
+insert into Clienti values(1001,'Mihai Popescu','R1001',0,'Str.I.L.Caragiale','223658',null,'6600',0,0);
+insert into Clienti values(1002,'George Stamascu','R1002',0,'Str.Sapientiei','222624',null,'6600',0,0);
+insert into Clienti values(1003,'Mircea Dumitriu ','R1003',0,'Str.Crinului nr.15','258624',null,'6600',0,0);
+insert into Clienti values(1004,'Danilela Bartod ','R1004',0,'Str.Drjneanului nr.2A',null,null,'6600',0,0);
+insert into Clienti values(1005,'Mihai Stamate','R1005',0,'Str.I.Neculce nr.15','258864',null,'6600',0,0);
+insert into Clienti values(1006,'Vlad Radauceanu ','R25693',0,'Str.Voievozilor nr.25','256984',null,'6600',0,0);
+insert into Clienti values(1007,'Ion Mireanu','R15693',0,'Str.Stejar nr.25','225863',null,'6600',0,0);
+insert into Clienti values(1008,'Mihoc Magda','R1223',0,'Str.Vamasoaia nr.20','0740258624',null,'6600',0,0);
+insert into Clienti values(1009,'Crudu Alina','R1023',0,'Sos.Nicolina nr.66','200594',null,'6600',0,0);
+insert into Clienti values(1010,'Ciortan Ramona','R1503',0,'Str.Crisului nr.15',null,null,'6600',0,0);
+insert into Clienti values(1011,'Cimpan Madalina','R25893',0,'Str.Draghescu nr.7','254789',null,'6600',0,0);
+insert into Clienti values(1012,'Fintinaru Oana','R4564',0,'Str. Decebal nr.16','254353','fintinarumoana@yahoo.com','6600',0,0);
+
+
+insert into produse values(300,'Cascada','BUC',1200,9000,0.19);
+insert into produse values(301,'Pils','BUC',4000,6000,0.19);
+insert into produse values(302,'Blitz','BUC',700,4000,0.19);
+insert into produse values(303,'Orzoaica','TONE',18,1000000,0.19);
+insert into produse values(304,'Hamei','TONE',20,3000000,0.19);
+
+
+insert into contracte values(1111,to_date('01/01/2003','dd/mm/yyyy'),to_date('01/06/2003','dd/mm/yyyy'),1001,0.08);
+insert into contracte values(1112,to_date('01/02/2003','dd/mm/yyyy'),to_date('01/07/2003','dd/mm/yyyy'),1002,0.08);
+
+insert into liniicontr values(1111,1,300,3000,0,0.02);
+insert into liniicontr values(1111,2,301,1000,0,0.02);
+insert into liniicontr values(1111,3,302,900,0,0.02);
+
+insert into comenzi values(1001,null,to_date('01/04/2003','dd/mm/yyyy'),1001,0,0,null);
+insert into comenzi values(1002,null,to_date('02/04/2003','dd/mm/yyyy'),1002,0,0,null);
+insert into comenzi values(1003,null,to_date('03/04/2003','dd/mm/yyyy'),1003,0,0,null);
+insert into comenzi values(1004,null,to_date('03/04/2003','dd/mm/yyyy'),1004,0,0,null);
+insert into comenzi values(1005,null,to_date('03/04/2003','dd/mm/yyyy'),1005,0,0,null);
+insert into comenzi values(1006,null,to_date('04/04/2003','dd/mm/yyyy'),1006,0,0,null);
+insert into comenzi values(1007,null,to_date('04/04/2003','dd/mm/yyyy'),1007,0,0,null);
+insert into comenzi values(1008,null,to_date('05/04/2003','dd/mm/yyyy'),1008,0,0,null);
+insert into comenzi values(1009,null,to_date('05/04/2003','dd/mm/yyyy'),1009,0,0,null);
+insert into comenzi values(1010,null,to_date('05/04/2003','dd/mm/yyyy'),1010,0,0,null);
+insert into comenzi values(1011,null,to_date('05/04/2003','dd/mm/yyyy'),1011,0,0,null);
+insert into comenzi values(1012,null,to_date('05/04/2003','dd/mm/yyyy'),1012,0,0,null);
+
+
+insert into  liniicom values(1001,1,300,20,20,9000);
+insert into  liniicom values(1001,2,301,20,20,6000);
+insert into  liniicom values(1002,1,303,1,1,1000000);
+insert into  liniicom values(1003,1,303,1,1,1000000);
+insert into  liniicom values(1004,1,304,1,1,3000000);
+insert into  liniicom values(1005,1,300,25,25,9000);
+insert into  liniicom values(1005,2,301,20,20,6000);
+insert into  liniicom values(1005,3,302,30,30,4000);
+insert into  liniicom values(1006,1,304,1,1,3000000);
+insert into  liniicom values(1007,1,302,50,50,4000);
+insert into  liniicom values(1008,1,300,30,30,9000);
+insert into  liniicom values(1009,1,302,40,40,4000);
+insert into  liniicom values(1009,2,300,40,40,9000);
+insert into  liniicom values(1010,1,303,1,1,1000000);
+insert into  liniicom values(1010,2,304,1,1,3000000);
+insert into  liniicom values(1011,1,302,35,35,4000);
+insert into  liniicom values(1012,1,300,25,25,9000);
+insert into  liniicom values(1012,2,301,30,30,6000);
+
+insert into facturi values(1,1111,null,to_date('01/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1001);
+insert into facturi values(2,1112,null,to_date('01/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1002);
+insert into facturi values(3,1113,null,to_date('01/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1003);
+insert into facturi values(4,1114,null,to_date('01/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1004);
+insert into facturi values(5,1115,null,to_date('02/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1005);
+insert into facturi values(6,1116,null,to_date('02/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1006);
+insert into facturi values(7,1117,null,to_date('02/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1007);
+insert into facturi values(8,1118,null,to_date('02/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1008);
+insert into facturi values(9,1119,null,to_date('02/05/2003','dd/mm/yyyy'),1000000,null,null,null,null,1597000,null,1009);
+
+insert into docincas values(1,null,to_date('01/04/2003','dd/mm/yyyy'),'CHIT',500,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(2,null,to_date('01/04/2003','dd/mm/yyyy'),'OP',700,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(3,null,to_date('01/04/2003','dd/mm/yyyy'),'CEC',300,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(4,null,to_date('01/04/2003','dd/mm/yyyy'),'CEC',400,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(5,null,to_date('01/04/2003','dd/mm/yyyy'),'OP',400,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(6,null,to_date('01/04/2003','dd/mm/yyyy'),'OP',4320,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(7,null,to_date('01/04/2003','dd/mm/yyyy'),'CEC',4321,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(8,null,to_date('01/04/2003','dd/mm/yyyy'),'CHIT',430,to_date('02/03/2003','dd/mm/yyyy'));
+insert into docincas values(9,null,to_date('01/04/2003','dd/mm/yyyy'),'OP',433,to_date('02/03/2003','dd/mm/yyyy'));
+
+insert into incasfact values(1,1,1001,500000);
+insert into incasfact values(2,2,1002,200000);
+insert into incasfact values(3,3,1003,300000);
+insert into incasfact values(4,4,1004,400000);
+insert into incasfact values(5,5,1005,350000);
+insert into incasfact values(6,6,1006,150000);
+insert into incasfact values(7,7,1007,250000);
+insert into incasfact values(8,8,1008,200000);
+insert into incasfact values(9,9,1009,200000);

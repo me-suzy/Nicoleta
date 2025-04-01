@@ -1,0 +1,22 @@
+ create or replace trigger trg_liniicom_aur_cantliv
+  after update of cantlivr on liniicom
+referencing old as old new as new
+  for each row
+declare
+   old.cantlivr liniicom.cantlivr%type;
+begin
+   if :new.cantlivr<>old.cantlivr then
+    update comenzi set valcomliv=valcomliv - :old.cantlivr * :new.PU + :new.cantlivr * :new.PU
+         where idcom=:old.idcom;
+   end if;
+end;
+ /
+
+
+
+
+
+
+
+
+

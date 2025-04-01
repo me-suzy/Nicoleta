@@ -1,0 +1,13 @@
+CREATE OR REPLACE TRIGGER trg_produse_aur
+	AFTER UPDATE OF Codpr ON produse 
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE liniicom SET Codpr=:nou.Codpr
+		WHERE Codpr=:vechi.Codpr;
+	UPDATE liniicontr SET Codpr=:nou.Codpr
+		WHERE Codpr=:vechi.Codpr;
+        UPDATE liniifact SET Codpr=:nou.Codpr
+		WHERE Codpr=:vechi.Codpr;
+END;
+/

@@ -1,0 +1,18 @@
+CREATE OR REPLACE TRIGGER trg_incasfact_aur
+	AFTER UPDATE OF suma ON incasfact
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE clienti SET incasari=incasari-:vechi.suma+:nou.suma
+		WHERE codcl=:vechi.codcl;
+END;
+/
+CREATE OR REPLACE TRIGGER trg_incasfact_insert
+	AFTER insert on incasfact
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE clienti SET incasari=incasari+:nou.suma
+		WHERE codcl=:nou.codcl;
+END;
+/

@@ -1,0 +1,234 @@
+drop table utilizatori;
+drop table discount_uri;
+drop table liniicom;
+drop table liniifact;
+drop table liniicontr;
+drop table incasfact;
+drop table contracte;
+drop table facturi;
+drop table comenzi;
+drop table clienti;
+drop table produse;
+drop table docincas;
+drop table localitati;
+drop table judet;
+ CREATE TABLE Judet(
+    Indicativ  VARCHAR2(2)
+                   constraint nn_judet_indicativ NOT NULL  
+                    constraint pk_judet PRIMARY KEY
+                    constraint ck_judet_indicativ check(indicativ=ltrim(upper(indicativ))),
+    Regiune    VARCHAR2(15) default 'Moldova'
+                    constraint nn_judet_regiune  NOT NULL
+                    constraint ck_judet_regiune check(regiune in('Moldova','Oltenia','Muntenia','Oltenia','Dobrogea','Transilvania')),
+    Jud        VARCHAR2(15)
+                    constraint nn_judet_jud  NOT NULL
+                    constraint ck_judet_jud check(jud=initcap(jud))
+ );
+ CREATE TABLE Localitati(
+    CodPost    char(5)
+                         constraint nn_localitati_codpost NOT NULL
+                         constraint pk_localitati PRIMARY KEY,
+    Loc        VARCHAR2(15)
+                         constraint nn_localitati_loc NOT NULL
+                         constraint ck_localitati_loc check(loc=initcap(loc)),
+    Indicativ  VARCHAR2(2)
+                         constraint nn_localitati_indicativ NOT NULL
+                         constraint ck_localitati_indicativ check(indicativ=ltrim(upper(indicativ)))
+               constraint fk_localitati_judet REFERENCES judet(indicativ)
+ );
+ CREATE TABLE Produse(
+    Codpr    INTEGER
+                         constraint nn_produse_codpr NOT NULL
+                          constraint pk_produse PRIMARY KEY,
+    Denpr    VARCHAR2(15)
+                          constraint nn_produse_denpr NOT NULL
+                          constraint ck_produse_denpr check(denpr=initcap(denpr)),
+    UM       VARCHAR2(8) default 'BUC'
+                          constraint nn_produse_um NOT NULL
+                         constraint ck_produse_um check(UM IN ('BUC','TONE','KEG')),
+    Cant     NUMBER (16,2) default 0
+                        constraint nn_produse_cant NOT NULL,
+    PU       NUMBER (16,2) default 6000
+                          constraint nn_produse_pu NOT NULL,
+    ProcTVA  NUMBER (2,2) default 0.19
+                         constraint nn_produse_proctva NOT NULL
+ );
+ CREATE TABLE Clienti(
+   Codcl     INTEGER
+                       constraint nn_clienti_codcl not null
+                       constraint pk_clienti PRIMARY KEY,
+   Dencl     VARCHAR2(30)
+                        constraint nn_clienti_dencl NOT NULL
+                        constraint ck_clienti_dencl check(substr(dencl,1,1)=upper(substr(dencl,1,1))),
+    Codfisc   VARCHAR2(10)
+                         constraint nn_clienti_codfisc NOT NULL,
+    Si        NUMBER (16,2)
+                        constraint nn_clienti_si NOT NULL,
+    Adresa    VARCHAR2(25)
+                        constraint ck_clienti_adresa check(substr(adresa,1,1)=upper(substr(adresa,1,1))),
+    Telefon   varchar2(10),
+    E_mail    VARCHAR2(30),
+    CodPost   char(5)
+                   constraint nn_clienti_codpost NOT NULL
+                   constraint fk_clienti_localitati REFERENCES localitati(codpost),
+    Vanzari   NUMBER (16,2)
+                   constraint nn_clienti_vanzari NOT NULL,
+    Incasari  NUMBER (16,2)
+                   constraint nn_clienti_incasari  NOT NULL             
+ );
+ CREATE TABLE Comenzi(
+    IdCom      integer
+                      constraint nn_comenzi_idcom NOT NULL
+                      constraint pk_comenzi PRIMARY KEY,
+    NrComS     integer,
+    DataCom    DATE default sysdate
+                     constraint nn_comenzi_datacom NOT NULL,
+    Codcl      INTEGER
+                  constraint fk_comenzi_clienti REFERENCES clienti(codcl),
+    ValComCer  NUMBER (16,2)
+                  constraint nn_comenzi_valcomcer NOT NULL,
+    ValComLiv  NUMBER (16,2)
+                   constraint nn_comenzi_valcomlivr NOT NULL,
+    Obs        VARCHAR2(50)                 
+ );
+ CREATE TABLE Contracte(
+    NrCtr      integer
+                   constraint nn_contracte_nrctr NOT NULL
+                   constraint pk_contracte PRIMARY KEY,
+    DataInch    DATE default sysdate
+                   constraint nn_contracte_datainch NOT NULL
+                   constraint ck_contracte_datainch check(datainch between to_date('01/01/2002','dd/mm/yyyy') and to_date('31/12/2010','dd/mm/yyyy')),
+    DataExp    DATE
+                   constraint nn_contracte_dataexp NOT NULL
+                   constraint ck_contracte_dataexp check(dataexp between to_date('01/01/2002','dd/mm/yyyy') and to_date('31/12/2010','dd/mm/yyyy')),
+    Codcl      INTEGER
+                   constraint nn_contracte_codcl NOT NULL
+                   constraint fk_contracte_clienti REFERENCES clienti(codcl),
+    ProcDiscTotCtr  NUMBER (2,2) default .08
+                     constraint nn_contracte_procdisctotctr NOT NULL                   
+ );
+ CREATE TABLE Discount_uri(
+    CodDisc  integer
+                       constraint nn_discounturi_coddisc NOT NULL
+                       constraint pk_discountuti PRIMARY KEY,
+    DenDisc   CHAR(20)
+                       constraint nn_discounturi_dendisc NOT NULL,
+    Procdisc  NUMBER (2,2)
+                       constraint nn_discounturi_procdisc NOT NULL
+ );
+ CREATE TABLE Docincas(
+    CodIncas    INTEGER
+                       constraint nn_docincas_codincas NOT NULL
+                       constraint pk_docincas PRIMARY KEY,
+    CodIncasSt  INTEGER,
+    DataIncas   DATE
+                       constraint nn_docincas_dataincas NOT NULL
+                       constraint ck_docincas_dataincas check(dataincas between to_date('01/01/2002','dd/mm/yyyy') and to_date('31/12/2010','dd/mm/yyyy')),
+    coddoc char(4)
+                       constraint ck_docincas_coddoc check(coddoc=upper(ltrim(coddoc))),   
+    NrDoc      integer
+                       constraint nn_docincas_nrdoc NOT NULL,
+    DataDoc     DATE
+                      constraint nn_docincas_datadoc NOT NULL
+                      constraint ck_docincas_datadoc check(datadoc between to_date('01/01/2002','dd/mm/yyyy') and to_date('31/12/2010','dd/mm/yyyy'))
+ );
+ CREATE TABLE Facturi(
+    Idfact     integer
+                    constraint nn_facturi_idfact  NOT NULL
+                    constraint pk_facturi PRIMARY KEY,
+    Nrfact     integer
+                    constraint nn_facturi_ntfact NOT NULL,
+    NrfactS    integer,
+    Datafact   date default sysdate
+                    constraint nn_facturi_datafact NOT NULL
+                   constraint ck_facturi_datafact check(datafact between to_date('01/01/2002','dd/mm/yyyy') and to_date('31/12/2010','dd/mm/yyyy')),
+    Totalfact  NUMBER (16,2)
+                   constraint nn_facturi_totalfact NOT NULL,
+    Procdisc   NUMBER (2,2),
+    Sumadisc   NUMBER (16,2),
+    Procpen    NUMBER (2,2),
+    SumaPen    NUMBER (16,2),
+    ValFact    NUMBER (16,2)
+                     constraint nn_facturi_valfact NOT NULL,
+   Obs        VARCHAR2(50),
+    Codcl      INTEGER
+                  constraint nn_facturi_codcl NOT NULL
+                  constraint fk_facturi_clienti  REFERENCES clienti(codcl)
+ );
+ CREATE TABLE Incasfact(
+    CodIncas  INTEGER
+                     constraint nn_incasfact_codincas  NOT NULL
+                     constraint fk_incasfact_docincas REFERENCES docincas(codincas),
+    Idfact    integer
+                     constraint nn_incasfact_idfact NOT NULL
+                     constraint fk_incasfact_facturi REFERENCES facturi(idfact),
+    Codcl     INTEGER
+                   constraint nn_incasfact_codcl NOT NULL,
+    Suma      NUMBER (16,2)
+                   constraint nn_incasfact_suma  NOT NULL,
+               constraint pk_incasfact PRIMARY KEY(CodIncas,IdFact)                                
+ );
+ CREATE TABLE Liniicom(
+    IdCom     integer
+                   constraint nn_liniicom_idcom  NOT NULL
+                   constraint fk_liniicom_comenzi REFERENCES comenzi(idcom),
+    NrLinieC  INTEGER
+                   constraint nn_liniicom_nrliniec NOT NULL
+                   constraint ck_liniicom_nrliniec check(nrliniec>0),
+    Codpr     INTEGER
+                   constraint fk_liniicom_produse REFERENCES produse(codpr),
+    CantCer   NUMBER (16,2)
+                    constraint nn_liniicom_cantcer NOT NULL,
+    CantLivr  NUMBER (16,2)
+                   constraint nn_liniicom_cantlivr NOT NULL,
+    PU           number(16,2)
+                  constraint nn_liniicom_pu not null,
+                  constraint pk_liniicom PRIMARY KEY(IdCom,NrlinieC)
+ );
+ CREATE TABLE Liniicontr(
+    NrCtr       integer
+                     constraint nn_liniicontr_nrctr NOT NULL,
+    NrLinieCtr   INTEGER
+                     constraint nn_liniicontr_nrliniictr NOT NULL
+                      constraint ck_liniicontr_nrliniectr check(nrliniectr>0),
+    Codpr       INTEGER
+                       constraint fk_liniicontr_produse REFERENCES produse(codpr),
+    CantCtr     NUMBER (16,2)
+                      constraint nn_liniicontr_cantctr NOT NULL
+                      constraint fk_liniicontr_contracte REFERENCES contracte(nrctr),
+    CantRealiz  NUMBER (16,2)
+                      constraint nn_liniicontr_cantrealiz NOT NULL,
+    ProcDiscPr  NUMBER (2,2)
+                       constraint nn_liniicontr_procdiscpr NOT NULL,
+                    constraint pk_liniicontr PRIMARY KEY(NrCtr,NrLinieCtr)                                          
+ );
+ CREATE TABLE Liniifact(
+    Idfact      integer
+                     constraint nn_liniifact_idfact NOT NULL
+                     constraint fk_liniifact_facturi REFERENCES facturi(idFact),
+    NrLinie     INTEGER
+                      constraint nn_liniifact_nrlinie NOT NULL
+                      constraint ck_liniifact_nrlinie check(nrlinie>0),
+    Codpr       INTEGER
+                      constraint nn_liniifact_codpr NOT NULL
+                      constraint fk_liniifact_produs REFERENCES produse(codpr),
+    Cantit      NUMBER (16,2)
+                      constraint nn_liniifact_cantit NOT NULL,
+    PU          NUMBER (16,2)
+                      constraint nn_liniifact_pu NOT NULL,
+    ProcDiscPr  NUMBER (2,2)
+                      constraint nn_liniifact_procdiscpr NOT NULL,
+    ValDisc     NUMBER (16,2)
+                     constraint nn_liniifact_valdisc NOT NULL,
+                     constraint pk_liniifact PRIMARY KEY(IdFact,NrLinie)                                  
+ );
+ CREATE TABLE Utilizatori(
+    CodUtiliz  integer
+                      constraint nn_utilizatori_codutiliz NOT NULL
+                       constraint pk_utilizatori PRIMARY KEY,
+    DenUtiliz  varchar2(20)
+                      constraint nn_utilizatori_denutiliz NOT NULL
+                       constraint ck_utilizatori check(denutiliz=upper(denutiliz)),
+    Parola     varchar2(10)
+                       constraint nn_utilizatori_parola NOT NULL
+ );

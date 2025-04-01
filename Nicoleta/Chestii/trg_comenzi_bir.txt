@@ -1,0 +1,11 @@
+
+create or replace trigger trg_comenzi_bir
+before insert on comenzi 
+for each row
+declare
+	idc_ comenzi.idcom%type;
+begin
+	select seq_comenzi_idcom.nextval into idc_ from dual;
+	:new.idcom := idc_;
+end;
+/

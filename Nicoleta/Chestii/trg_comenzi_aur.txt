@@ -1,0 +1,18 @@
+CREATE OR REPLACE TRIGGER trg_comenzi_aur
+	AFTER UPDATE OF valcomliv ON comenzi
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE clienti SET vanzari=vanzari-:vechi.valcomliv+:nou.valcomliv
+		WHERE codcl=:vechi.codcl;
+END;
+/
+CREATE OR REPLACE TRIGGER trg_comenzi_insert
+	AFTER insert on comenzi
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+BEGIN
+	UPDATE clienti SET vanzari=vanzari+:nou.valcomliv
+		WHERE codcl=:nou.codcl;
+END;
+/

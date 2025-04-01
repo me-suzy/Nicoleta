@@ -1,0 +1,10 @@
+CREATE OR REPLACE TRIGGER trg_localitati_aur
+	AFTER UPDATE OF codpost ON localitati 
+	REFERENCING NEW AS nou OLD AS vechi
+	FOR EACH ROW
+
+BEGIN
+	UPDATE clienti SET codpost=:nou.codpost
+		WHERE codpost=:vechi.codpost;
+END;
+/

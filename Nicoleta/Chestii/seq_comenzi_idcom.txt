@@ -1,0 +1,7 @@
+create sequence seq_comenzi_idcom
+increment by 1
+minvalue  11111111
+maxvalue 99999999
+nocycle
+order
+/

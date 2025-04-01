@@ -1,0 +1,9 @@
+create or replace trigger trg_judet_aur
+after update of indicativ on judet 
+for each row
+begin
+	update localitati set indicativ=:new.indicativ
+		where indicativ=:old.indicativ;
+end;
+/
+

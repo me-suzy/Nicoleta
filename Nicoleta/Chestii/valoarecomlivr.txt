@@ -1,0 +1,9 @@
+create or replace procedure p_valcomliv (pidcom in number)
+as
+	valcomliv_ number;
+begin
+	select sum(cantlivr *Pu) into valcomliv_ from liniicom lc where
+		idcom = pidcom;
+	update comenzi set valcomliv= valcomliv_ where idcom = pidcom;
+end;
+/

@@ -1,0 +1,6 @@
+@c:\psi_proiect\trg\trg_clienti_bir;
+@c:\psi_proiect\trg\trg_clienti_aur;
+@c:\psi_proiect\trg\trg_comenzi_bir;
+@c:\psi_proiect\trg\trg_comenzi_bir;
+@C:/psi_proiect/trg/trg_judet_aur;
+@C:/psi_proiect/trg/trg_localitati_aur;

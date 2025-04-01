@@ -1,0 +1,6 @@
+@C:\psi_proiect\scriptpsi
+
+@C:\psi_proiect\populare
+
+@c:\psi_proiect\executa_trg
+

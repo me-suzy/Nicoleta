@@ -1,0 +1,10 @@
+
+create or replace trigger trg_clienti_bir
+before insert on clienti 
+referencing old as old new as new
+for each row
+begin
+	select seq_clienti_codcl.nextval into :new.codcl from dual;
+end;
+/
+
